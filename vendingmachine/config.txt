@@ -1,0 +1,8 @@
+#database url
+dburl::127.0.0.1:27017
+#database name
+dbname::db
+#database user
+dbuser::u
+#database password
+dbpass::123

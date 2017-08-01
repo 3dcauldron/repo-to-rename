@@ -1,0 +1,110 @@
+<head>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+  <style type="text/css">
+  .form-style-8{
+      font-family: 'Open Sans Condensed', arial, sans;
+      padding: 30px;
+      width: 1000px;
+      background: #FFFFFF;
+      margin: 50px auto;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+      -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+      -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+
+  }
+  .form-style-8 h2{
+      background: #4D4D4D;
+      text-transform: uppercase;
+      font-family: 'Open Sans Condensed', sans-serif;
+      color: #FFFFFF;
+      font-size: 18px;
+      font-weight: 100;
+      padding: 20px;
+      margin: -30px -30px 30px -30px;
+  }
+  .form-style-8 input[type="text"],
+  .form-style-8 input[type="date"],
+  .form-style-8 input[type="datetime"],
+  .form-style-8 input[type="email"],
+  .form-style-8 input[type="number"],
+  .form-style-8 input[type="search"],
+  .form-style-8 input[type="time"],
+  .form-style-8 input[type="url"],
+  .form-style-8 input[type="password"],
+  .form-style-8 textarea,
+  .form-style-8 select
+  {
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      outline: none;
+      display: block;
+      width: 100%;
+      padding: 7px;
+      border: none;
+      border-bottom: 1px solid #ddd;
+      background: transparent;
+      margin-bottom: 10px;
+      font: 16px Arial, Helvetica, sans-serif;
+      height: 45px;
+  }
+  .form-style-8 textarea{
+      resize:none;
+      overflow: hidden;
+  }
+  .form-style-8 input[type="button"],
+  .form-style-8 input[type="submit"]{
+      -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+      -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+      box-shadow: inset 0px 1px 0px 0px #008080;
+      background-color: #008080;
+      border: 1px solid #008080;
+      display: inline-block;
+      cursor: pointer;
+      color: #FFFFFF;
+      font-family: 'Open Sans Condensed', sans-serif;
+      font-size: 14px;
+      padding: 8px 18px;
+      text-decoration: none;
+      text-transform: uppercase;
+  }
+  .form-style-8 input[type="button"]:hover,
+  .form-style-8 input[type="submit"]:hover {
+      background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+      background-color:#34CACA;
+  }
+  td {
+    padding: 50px;
+    vertical-align:top
+}
+  </style>
+</head>
+<body>
+  <div class="form-style-8">
+  {% block content %}
+    <table><tr><td>
+    <h2>Provide location information</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      Name:<input type="text" name="name" id="name"></input>
+      Contact number: <input type="text" name="number" id="number"></input>
+      Address: <input type="text" name="address" id="address"></input>
+      GPS:  Latitude<input type="text" name="lat" id="lat"></input>
+      GPS:  Longitude<input type="text" name="lon" id="lon"></input>
+      Contract: <input type="text" name="contract" id="contract"></input>
+    </td><td>
+      <h2>Machine:</h2>
+            Type (drink, snacks, etc.):<input type="text" name="type" id="type"></input>
+            Capacity:<input type="text" name="capacity" id="capacity"></input>
+            Current quantity:<input type="text" name="quantity" id="quantity"></input>
+            Price:<input type="text" name="price" id="price"></input>
+            KEY USER: <input type="text" name="user" id="user"></input>
+            Change: <input type="text" name="change" id="change"></input>
+          </td></tr></table>
+
+      <input type="submit" value="Submit" />     <input type="button" value="Back" onclick="window.history.back()" />
+
+    </form>
+  </div>
+</body>
+  {% endblock %}

@@ -1,0 +1,23 @@
+{% load static %}
+
+{% block content %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile">
+    <button type="submit">Upload</button>
+    <br>
+
+    <input type="checkbox" name="pause" id="pause" value="pause"> Pause </input><br>
+    <input type="checkbox" name="beep" id="beep" value="beep"> Beep</input><br>
+    Frequency of the beep: <input type="text" name="frequency" id="frequency"></input><br>
+    Duration of the beep: <input type="text" name="duration" id="duration"></input><br>
+    Add beep at height (In milimeters, I.E. 2.000): <input type="text" name="height" id="height"></input><br>
+    Parameters for the pause command:<br>
+      X:<input type="text" name="paramsetX" id="paramset"></input><br>
+      Y:<input type="text" name="paramsetY" id="paramset"></input><br>
+      Z:<input type="text" name="paramsetZ" id="paramset"></input><br>
+      E:<input type="text" name="paramsetE" id="paramset"></input><br>
+      L:<input type="text" name="paramsetL" id="paramset"></input><br>
+
+  </form
+{% endblock %}
