@@ -69,6 +69,24 @@ class Location(object):
         t['contract'] = self.contract
         return t
 
+    def set_contract(self,contract):
+        self.contract = contract
+
+    def update_all(self, updates):
+        name,number,address,lat,lon,machine,contract
+        if not name == updates[0]:
+            self.set_name(updates[0])
+        if not number == updates[1]:
+            self.set_contact_number(updates[1])
+        if not address == updates[2]:
+            self.set_address(updates[2])
+        if not GPS['lat'] == updates[3] or not GPS['lon'] == updates[4]:
+            self.set_GPS({"lat":updates[3],"lon":updates[4]})
+        if not contract == updates[6]:
+            self.set_contract(updates[6])
+        self.update_machine(updates[5])
+
+
 if __name__ == "__main__":
     l = Location()
     l.set_name("TEST","USER")

@@ -74,8 +74,15 @@ class Database(object):
 
     def deleteLocation(self,locationID):
         locationID = ObjectId(locationID)
-        print(dir(locationID))
         self.db.locations.delete_one({'_id':locationID})
+
+    def getLocationById(self,locationID):
+        locationID = ObjectId(locationID)
+        return self.db.locations.find_one({'_id':locationID})
+
+    def updateLocation(self,locationID,location):
+        locationID = ObjectId(locationID)
+        self.db.locations.find_one_and_update({'_id':locationID}, location)
 
 if __name__ == "__main__":
 

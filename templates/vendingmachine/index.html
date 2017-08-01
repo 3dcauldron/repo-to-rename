@@ -77,11 +77,15 @@
               e.style.display = 'none';
        }
     </script>
-    <form method="post" action="/vendingmachine/">{% csrf_token %}
     <h1>{{ v.name }}
       <button type="button" style="color: #4D4D4D;" onclick="toggle_visibility('{{ k }}');">Hide</button>
-      <button style="color: #4D4D4D;" type="submit">Delete</button>
+      <form method="post" action="/vendingmachine/">{% csrf_token %}
+        <button style="color: #4D4D4D;" type="submit">Delete</button>
         <input type="hidden" name="delete_item" value="{{ k }}" />
+      </form>
+      <form method="post" action="/vendingmachine/editvendingmachine/">{% csrf_token %}
+        <button style="color: #4D4D4D;" type="submit">Edit</button>
+        <input type="hidden" name="edit_item" value="{{ k }}" />
       </form>
     </h1>
   </div>
