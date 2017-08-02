@@ -82,7 +82,19 @@ class Database(object):
 
     def updateLocation(self,locationID,location):
         locationID = ObjectId(locationID)
-        self.db.locations.find_one_and_update({'_id':locationID}, location)
+        l = location.to_dict()
+        pprint(l)
+        self.db.locations.find_one_and_update({'_id':locationID},
+            {"$set": {
+                       "name": l['name'],
+                       "address": l['address'],
+                       "contact_number": l['contact_number'],
+                       "GPS": l['GPS'],
+                       "machine": l['machine'],
+                       "history": l['history'],
+                       "notes": l['notes'],
+                       "contract": l['contract']
+                      }})
 
 if __name__ == "__main__":
 

@@ -45,36 +45,38 @@ def addvendingmachine(request):
 
 def editvendingmachine(request):
     id = request.POST.get('edit_item', '')
-    if(not id == ''):
+    if(id != ''):
+        #The ID is under edit_item, so we are still in the first part
         l = {}
         location = db.getLocationById(id)
         context = {'out': location}
+        context['id'] = id
         return render(request, 'vendingmachine/editvendingmachine_finish.html', context)
     else:
+        #This is where we grab all the fields and update our location
+        id = request.POST.get('id', '')
+        name = request.POST.get('name', '')
+        number = request.POST.get('number', '')
+        address = request.POST.get('address', '')
+        lat = request.POST.get('lat', 0)
+        lon = request.POST.get('lon', 0)
+        types = request.POST.get('type', '')
+        capacity = request.POST.get('capacity', '')
+        quantity = request.POST.get('quantity', '')
+        price = request.POST.get('price', '')
+        user = request.POST.get('user', '')
+        change = request.POST.get('change', '')
+        contract = request.POST.get('contract', '')
+
+        machine = Machine(product=types,size=capacity,quantity=quantity,price=price,key = {'id':'01AB', 'user':user}, change = change)
+
+        updates = name,number,address,lat,lon,machine,contract
+
+        if lat == 0 and lat == 0:
+            return render(request, 'vendingmachine/editvendingmachine_finish.html')
+
+        loc = db.getLocationById(id)
+        location = Location(name=loc['name'], contact_number=loc['contact_number'], address=loc['address'], GPS=loc['GPS'], contract=loc['contract'])
+        location.update_all(updates)
+        db.updateLocation(id,location)
         return redirect('/vendingmachine')
-
-
-def editvendingmachine_finish(request):
-    id = request.POST.get('id', '')
-    name = request.POST.get('name', '')
-    number = request.POST.get('number', '')
-    address = request.POST.get('address', '')
-    lat = request.POST.get('lat', 0)
-    lon = request.POST.get('lon', 0)
-    types = request.POST.get('type', '')
-    capacity = request.POST.get('capacity', '')
-    quantity = request.POST.get('quantity', '')
-    price = request.POST.get('price', '')
-    user = request.POST.get('user', '')
-    change = request.POST.get('change', '')
-    contract = request.POST.get('contract', '')
-
-    updates = name,number,address,lat,lon,machine,contract
-
-    if lat == 0 and lat == 0:
-        return render(request, 'vendingmachine/editvendingmachine_finish.html')
-
-    loc = db.getLocationsData({'_id':id})
-    location.update_all(updates)
-    db.updateLocation(id,location)
-    return render(request, 'vendingmachine/editvendingmachine_finish.html')

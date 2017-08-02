@@ -85,11 +85,11 @@
     <table><tr><td>
     <h2>Provide location information</h2>
     <form method="post" enctype="multipart/form-data">
-      <input type="hidden" name="id" value="{{ out.id }}" />
+      <input type="hidden" name="id" value="{{ id }}" />
       {% csrf_token %}
       Name:<input type="text" name="name" id="name" value="{{out.name}}"></input>
       Contact number: <input type="text" name="number" id="out" value="{{out.contact_number}}"></input>
-      Address: <input type="text" name="address" id="address" value="{{out}}"></input>
+      Address: <input type="text" name="address" id="address" value="{{out.address}}"></input>
       GPS:  Latitude<input type="text" name="lat" id="lat" value="{{out.GPS.lat}}"></input>
       GPS:  Longitude<input type="text" name="lon" id="lon" value="{{out.GPS.lon}}"></input>
       Contract: <input type="text" name="contract" id="contract" value="{{out.contract}}"></input>

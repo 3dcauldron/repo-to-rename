@@ -77,17 +77,18 @@
               e.style.display = 'none';
        }
     </script>
-    <h1>{{ v.name }}
-      <button type="button" style="color: #4D4D4D;" onclick="toggle_visibility('{{ k }}');">Hide</button>
-      <form method="post" action="/vendingmachine/">{% csrf_token %}
-        <button style="color: #4D4D4D;" type="submit">Delete</button>
-        <input type="hidden" name="delete_item" value="{{ k }}" />
-      </form>
-      <form method="post" action="/vendingmachine/editvendingmachine/">{% csrf_token %}
-        <button style="color: #4D4D4D;" type="submit">Edit</button>
-        <input type="hidden" name="edit_item" value="{{ k }}" />
-      </form>
-    </h1>
+  <table><tr><td><h1>{{ v.name }}</h1></td>
+    <td><h1><button type="button" style="color: #4D4D4D;" onclick="toggle_visibility('{{ k }}');">Hide</button></h1></td>
+    <td><h1><form method="post" action="/vendingmachine/">
+      {% csrf_token %}
+      <button style="color: #4D4D4D;" type="submit">Delete</button>
+      <input type="hidden" name="delete_item" value="{{ k }}" />
+    </form></h1></td>
+    <td><h1><form method="post" action="/vendingmachine/editvendingmachine/">
+      {% csrf_token %}
+      <input type="hidden" name="edit_item" value="{{ k }}" />
+      <button style="color: #4D4D4D;" type="submit">Edit</button>
+    </form></h1></td></tr></table>
   </div>
   <div id='{{ k }}'>
     <table class="zui-table-MAIN">

@@ -26,6 +26,9 @@ class Machine(object):
     def update_change(self,coin,newAmount):
         self.change = newAmount
 
+    def get_user(self):
+        return self.key['user']
+
     def to_dict(self):
         t = {}
         t['product'] = self.product

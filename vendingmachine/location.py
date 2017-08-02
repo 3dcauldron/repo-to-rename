@@ -8,7 +8,7 @@ class Location(object):
     def __init__(self,name='TEST', contact_number='000-000-0000', address='0', GPS={'lat':0,'lon':0}, contract={}):
         self.name = name
         self.contact_number = contact_number
-        self.address = ''
+        self.address = address
         self.GPS = GPS
         self.machine = Machine()
         #history is a dictionary
@@ -16,7 +16,7 @@ class Location(object):
         #notes is a list of dictionaries (user,note,time)
         self.notes = list()
         #contract is a dict
-        self.contract = {}
+        self.contract = contract
 
     def update_history(self,note,user):
         now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -49,7 +49,7 @@ class Location(object):
         self.GPS = GPS
 
     def update_machine(self,machine,user):
-        self.update_history("machine updated",user)
+        self.update_history("machine updated ",user)
         self.machine = machine
 
     def add_note(self,note,user):
@@ -69,22 +69,24 @@ class Location(object):
         t['contract'] = self.contract
         return t
 
-    def set_contract(self,contract):
+    def set_contract(self,contract,user):
+        self.update_history("contract updated ",user)
         self.contract = contract
 
     def update_all(self, updates):
-        name,number,address,lat,lon,machine,contract
-        if not name == updates[0]:
-            self.set_name(updates[0])
-        if not number == updates[1]:
-            self.set_contact_number(updates[1])
-        if not address == updates[2]:
-            self.set_address(updates[2])
-        if not GPS['lat'] == updates[3] or not GPS['lon'] == updates[4]:
-            self.set_GPS({"lat":updates[3],"lon":updates[4]})
-        if not contract == updates[6]:
-            self.set_contract(updates[6])
-        self.update_machine(updates[5])
+        #In order: name,number,address,lat,lon,machine,contract
+        user = updates[5].get_user()
+        if self.name != updates[0]:
+            self.set_name(updates[0],user)
+        if self.contact_number != updates[1]:
+            self.set_contact_number(updates[1],user)
+        if self.address != updates[2]:
+            self.set_address(updates[2],user)
+        if self.GPS['lat'] != updates[3] or self.GPS['lon'] != updates[4]:
+            self.set_GPS({"lat":updates[3],"lon":updates[4]},user)
+        if self.contract != updates[6]:
+            self.set_contract(updates[6],user)
+        self.update_machine(updates[5],user)
 
 
 if __name__ == "__main__":
