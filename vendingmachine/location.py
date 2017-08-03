@@ -1,6 +1,6 @@
 from vendingmachine.machine import Machine
 import datetime
-import pprint
+from pprint import pprint
 from vendingmachine.database import Database
 from re import search
 class Location(object):
@@ -18,42 +18,54 @@ class Location(object):
         #contract is a dict
         self.contract = contract
 
+    def set_history(self, history):
+        self.history = history
+
+    def set_notes(self, notes):
+        self.notes = notes
+
     def update_history(self,note,user):
         now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         historyDate = {}
         try:
             historyDate = self.history[now]
+            historyDate['note'] = note
         except KeyError:
             historyDate = {}
+            historyDate['note'] = ''
         historyDate['user'] = user
-        historyDate['note'] = note
+        if historyDate['note'] == '':
+            historyDate['note'] = note
+        else:
+            historyDate['note'] = historyDate['note'] + ", " + note
         self.history[now] = historyDate
 
     def set_name(self,name,user):
-        self.update_history("Name updated from " + self.name + " to " + name,user)
-        self.name = name
+        if self.name != name:
+            self.update_history("Name updated from " + self.name + " to " + name,user)
+            self.name = name
 
     def set_contact_number(self,number,user):
-        if not search('[0-9]{3}-[0-9]{3}-[0-9]{4}',number):
-            print("Contact number not right!")
-            return
-        self.update_history("contact_number updated from " + self.contact_number + " to " + number,user)
-        self.contact_number = number
+        if self.contact_number != number:
+            self.update_history("contact_number updated from " + self.contact_number + " to " + number,user)
+            self.contact_number = number
 
     def set_address(self,address,user):
-        self.update_history("address updated from " + self.address + " to " + address,user)
-        self.address = address
+        if self.address != address:
+            self.update_history("address updated from " + self.address + " to " + address,user)
+            self.address = address
 
     def set_GPS(self,GPS,user):
-        self.update_history("GPS updated from " + self.GPS['lat'] + "," + self.GPS['lon'] + " to " + GPS['lat'] + "," + GPS['lon'],user)
-        self.GPS = GPS
+        if self.GPS['lat'] != GPS['lat'] and self.GPS['lon'] != self.GPS['lon']:
+            self.update_history("GPS updated from " + self.GPS['lat'] + "," + self.GPS['lon'] + " to " + GPS['lat'] + "," + GPS['lon'],user)
+            self.GPS = GPS
 
     def update_machine(self,machine,user):
-        self.update_history("machine updated ",user)
+        #self.update_history("machine updated ",user)
         self.machine = machine
 
     def add_note(self,note,user):
-        now = datetime.datetime.now()
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         dictionary = {'date':now, 'user':user, 'note':note}
         self.notes.append(dictionary)
 
@@ -70,22 +82,17 @@ class Location(object):
         return t
 
     def set_contract(self,contract,user):
-        self.update_history("contract updated ",user)
+        #self.update_history("contract updated ",user)
         self.contract = contract
 
     def update_all(self, updates):
         #In order: name,number,address,lat,lon,machine,contract
         user = updates[5].get_user()
-        if self.name != updates[0]:
-            self.set_name(updates[0],user)
-        if self.contact_number != updates[1]:
-            self.set_contact_number(updates[1],user)
-        if self.address != updates[2]:
-            self.set_address(updates[2],user)
-        if self.GPS['lat'] != updates[3] or self.GPS['lon'] != updates[4]:
-            self.set_GPS({"lat":updates[3],"lon":updates[4]},user)
-        if self.contract != updates[6]:
-            self.set_contract(updates[6],user)
+        self.set_name(updates[0],user)
+        self.set_contact_number(updates[1],user)
+        self.set_address(updates[2],user)
+        self.set_GPS({"lat":updates[3],"lon":updates[4]},user)
+        self.set_contract(updates[6],user)
         self.update_machine(updates[5],user)
 
 

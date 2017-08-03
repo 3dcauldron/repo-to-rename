@@ -83,7 +83,6 @@ class Database(object):
     def updateLocation(self,locationID,location):
         locationID = ObjectId(locationID)
         l = location.to_dict()
-        pprint(l)
         self.db.locations.find_one_and_update({'_id':locationID},
             {"$set": {
                        "name": l['name'],

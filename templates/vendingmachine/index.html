@@ -114,13 +114,15 @@
         </table>
       </td></tr>
       <tr><td>HISTORY</td><td>
-        <table class="zui-table">
+          <br>
           {% for ke,va in v.history.items %}
-          <tr><td>DATE:</td><td>{{ ke }}</td></tr>
-          <tr><td>USER:</td><td>{{va.user}}</td></tr>
-          <tr><td>NOTE:</td><td>{{va.note}}</td></tr>
+          <table class="zui-table">
+            <tr><td>DATE:</td><td>{{ ke }}</td></tr>
+            <tr><td>USER:</td><td>{{va.user}}</td></tr>
+            <tr><td>NOTE:</td><td>{{va.note}}</td></tr>
+          </table>
+          <br>
           {% endfor %}
-        </table>
       </tr></td>
       <tr><td>NOTES</td><td>{{ v.notes }}</td></tr>
       <tr><td>CONTRACT</td><td>{{ v.contract }}</td></tr>

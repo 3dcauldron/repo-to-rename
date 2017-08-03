@@ -77,6 +77,8 @@ def editvendingmachine(request):
 
         loc = db.getLocationById(id)
         location = Location(name=loc['name'], contact_number=loc['contact_number'], address=loc['address'], GPS=loc['GPS'], contract=loc['contract'])
+        location.set_history(loc['history'])
+        location.set_notes(loc['notes'])
         location.update_all(updates)
         db.updateLocation(id,location)
         return redirect('/vendingmachine')
